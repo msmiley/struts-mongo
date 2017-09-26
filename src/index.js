@@ -84,11 +84,9 @@ class MongoHandler extends Handler {
       this.tailOplog();
     }
     
-    // restart on connection close
-    // let the outer layer take care of restarting this server
+    // error on connection close
     this.db.on('close', () => {
-      this.error("Lost connection to mongodb, exiting");
-      process.exit(1); // deal breaker for now, can't even log the error to mongodb
+      this.error("Lost connection to mongodb");
     });
     
   }
