@@ -13,6 +13,7 @@ const MongoOplog = require('mongo-oplog');
 // {
 //   dbhost: "127.0.0.1", // mongod address
 //   dbname: "test",      // mongo database name to open
+//   dbopts: {},          // options object passed to driver on connect
 //   root: "mongodb"      // root for emitted events (e.g. 'mongodb.connected')
 // }
 // '''
@@ -32,6 +33,7 @@ class MongoHandler extends Handler {
     // set defaults
     this.options.dbhost = this.options.dbhost || "127.0.0.1";
     this.options.dbname = this.options.dbname || "test";
+    this.options.dbopts = this.options.dbopts || {};
     
     // the reference to the driver db object
     this.db = null;
@@ -53,7 +55,8 @@ class MongoHandler extends Handler {
     }
     
     // initiate connect
-    MongoClient.connect(fullhost).then(db => this.connected(db)).catch(err => this.error(err));
+    MongoClient.connect(fullhost, this.options.dbopt)
+    .then(db => this.connected(db)).catch(err => this.error(err));
   }
   
   //

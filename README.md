@@ -10,9 +10,12 @@ model and are emitted on the hub emitter.
 
 ```js
 
+// this represents the possible options and their defaults:
 const options = {
   dbhost: "127.0.0.1",
-  dbname: "test"
+  dbname: "test",
+  dbopts: {}, // passed to driver
+  root: "mongodb" // root of events (e.g. 'mongodb.connected')
 }
 
 class Hub extends EventEmitter {
