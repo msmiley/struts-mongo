@@ -14,8 +14,8 @@ model and are emitted on the hub emitter.
 const options = {
   dbhost: "127.0.0.1",
   dbname: "test",
-  dbopts: {}, // passed to driver
-  root: "mongodb" // root of events (e.g. 'mongodb.connected')
+  dbopts: {}, // passed to driver, see http://mongodb.github.io/node-mongodb-native/2.2/api/MongoClient.html
+  root: "mongodb" // root of emitted events (e.g. 'mongodb.connected')
 }
 
 class Hub extends EventEmitter {
@@ -32,16 +32,19 @@ class Hub extends EventEmitter {
     this.on("mongodb.insert", (data) => {
       // data.ns provides namespace of insert
       // data._id provides _id of new insertion
+      // data.o provides the relevant object
     });
     
     this.on("mongodb.update", (data) => {
       // data.ns provides namespace of insert
       // data._id provides _id of new insertion
+      // data.o provides the relevant object
     });
     
     this.on("mongodb.delete", (data) => {
       // data.ns provides namespace of insert
       // data._id provides _id of new insertion
+      // data.o provides the relevant object
     });
     
   }

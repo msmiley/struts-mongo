@@ -21,9 +21,9 @@ const MongoOplog = require('mongo-oplog');
 // ## Events
 // 
 // 'mongodb.connected', db
-// 'mongodb.insert', { ns: <namespace>, _id: <_id> }
-// 'mongodb.update', { ns: <namespace>, _id: <_id> }
-// 'mongodb.delete', { ns: <namespace>, _id: <_id> }
+// 'mongodb.insert', { ns: <namespace>, _id: <_id>, o: <obj> }
+// 'mongodb.update', { ns: <namespace>, _id: <_id>, o: <obj> }
+// 'mongodb.delete', { ns: <namespace>, _id: <_id>, o: <obj> }
 //
 class MongoHandler extends Handler {
   //
@@ -105,21 +105,24 @@ class MongoHandler extends Handler {
     this.oplog.on('insert', (doc) => {
       this.emitter.emit(`mongodb.insert`, {
         ns: doc.ns,
-        _id: doc.o._id
+        _id: doc.o._id,
+        o: doc.o
       });
     });
      
     this.oplog.on('update', (doc) => {
       this.emitter.emit(`mongodb.update`, {
         ns: doc.ns,
-        _id: doc.o2._id
+        _id: doc.o2._id,
+        o: doc.o
       });
     });
      
     this.oplog.on('delete', (doc) => {
       this.emitter.emit(`mongodb.delete`, {
         ns: doc.ns,
-        _id: doc.o._id
+        _id: doc.o._id,
+        o: doc.o
       });
     });
      
